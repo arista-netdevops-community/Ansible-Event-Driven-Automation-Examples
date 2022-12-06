@@ -1,0 +1,26 @@
+username: admin
+password: admin
+port: 6030
+timeout: 5s
+insecure: true
+
+targets:
+  172.20.20.3:
+    timeout: 2s
+    subscriptions:
+      - sub1
+    outputs:
+      - output1
+    
+subscriptions:
+  sub1:
+    paths:
+      - "/interfaces/interface[name=Ethernet1]/state/admin-status"
+    stream-mode: sample
+    sample-interval: 10s
+
+outputs:
+  output1:
+    type: nats
+    address: 127.0.0.1:4222
+    subject: test

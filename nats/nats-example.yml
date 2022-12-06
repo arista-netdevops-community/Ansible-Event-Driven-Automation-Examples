@@ -1,0 +1,20 @@
+---
+- name: Listen for events on nats
+  hosts: all
+
+  ## Define our source for events
+
+  sources:
+    - nats-eda:
+        subject: test
+        host: 127.0.0.1
+        port: 4222 
+
+  rules:
+    - name: check down interface
+      condition: event.values._interfaces_interface_state_admin_status == "DOWN"
+
+  ## Create an action once the data has hit the condition.
+      action:
+        run_playbook:
+          name: response-playbook.yml

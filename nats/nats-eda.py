@@ -1,6 +1,5 @@
 import asyncio
 import nats
-import asyncio
 import json
 import logging
 from typing import Any, Dict
@@ -38,5 +37,5 @@ if __name__ == "__main__":
     class MockQueue:
         async def put(self, event):
             print(event)
-    
+
     asyncio.run(main(MockQueue(), {}))

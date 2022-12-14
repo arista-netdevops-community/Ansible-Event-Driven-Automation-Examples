@@ -11,7 +11,7 @@ targets:
       - sub1
     outputs:
       - output1
-    
+
 subscriptions:
   sub1:
     paths:
@@ -22,5 +22,5 @@ subscriptions:
 outputs:
   output1:
     type: nats
-    address: 127.0.0.1:4222
+    address: nats:4222
     subject: test

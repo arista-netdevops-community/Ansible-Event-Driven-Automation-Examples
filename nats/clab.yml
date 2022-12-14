@@ -27,12 +27,8 @@ topology:
       kind: linux
       image: ghcr.io/karimra/gnmic:latest
       mgmt_ipv4: 172.20.20.5
-      ports:
-        - 7890:7890
-        - 9804:9804
       binds:
       - ./gnmic.yml:/app/gnmic-config.yml:ro
-      - /var/run/docker.sock:/var/run/docker.sock
       cmd: "--config /app/gnmic-config.yml subscribe"
     eda:
       kind: linux

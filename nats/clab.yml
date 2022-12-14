@@ -1,0 +1,45 @@
+name: nats-demo
+prefix: ""
+mgmt:
+  network: statics
+  ipv4_subnet: 172.20.20.0/24
+
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.29.0.2F
+  nodes:
+    ceos1:
+      kind: ceos
+      startup-config: startup/ceos1.conf
+      mgmt_ipv4: 172.20.20.2
+    ceos2:
+      kind: ceos
+      startup-config: startup/ceos2.conf
+      mgmt_ipv4: 172.20.20.3
+    nats:
+      kind: linux
+      image: nats
+      mgmt_ipv4: 172.20.20.4
+      ports:
+      - 4222:4222
+    gnmic1:
+      kind: linux
+      image: ghcr.io/karimra/gnmic:latest
+      mgmt_ipv4: 172.20.20.5
+      ports:
+        - 7890:7890
+        - 9804:9804
+      binds:
+      - ./gnmic.yml:/app/gnmic-config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      cmd: "--config /app/gnmic-config.yml subscribe"
+    eda:
+      kind: linux
+      image: juliopdx/ansible-eda:latest
+      mgmt_ipv4: 172.20.20.6
+      binds:
+      - ../nats:/tmp/:ro
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]

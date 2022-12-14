@@ -7,8 +7,8 @@
   sources:
     - nats-eda:
         subject: test
-        host: 127.0.0.1
-        port: 4222 
+        host: nats
+        port: 4222
 
   rules:
     - name: check down interface
